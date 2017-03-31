@@ -55,7 +55,7 @@ public class ScaleFreeNetworkType2 {
 						nodes.get(i).incGrau();
 						nodes.get(id).incGrau();
 						totalGrau += 2;
-					}			
+					}		
 				}
 			}
 		}

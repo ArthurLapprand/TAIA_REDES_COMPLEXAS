@@ -30,52 +30,39 @@ public class ScaleFreeNetwork {
 		
 		Random r = new Random();
 		
+		double totalGrau = 0;
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		
-		double p = 0.5;
-		int n1, n2;
-		for (int id = 0; id < 200; id++) {
+		// insere nós iniciais, neste caso, 2 nós
+		nodes.add(new Node(0, 0));
+		nodes.add(new Node(1, 0));
+		nodeLines.add("0");
+		nodeLines.add("1");
+		edgesLines.add(1 + ";" + 0 + ";Undirected");
+		nodes.get(0).incGrau();
+		nodes.get(1).incGrau();
+		totalGrau += 2;
+		
+		int n = 2; // quantidade de nós inicial
+		
+		for (int id = n; id < 200; id++) {
 			nodes.add(new Node(id, 0));
-			nodeLines.add("" + (id + 1));
-			if (id == 1) {
-				if (r.nextDouble() <= p) { 
-					edgesLines.add(id + ";" + 0 + ";Undirected");
-					nodes.get(0).incGrau();
+			System.out.println(id);
+			nodeLines.add("" + id);
+			int c = 0;
+			// aqui a ordem de tentativa de conexão dos nós é do mais recente ao mais antigo
+			int id2 = nodes.size()-2;
+			while (c < n) {
+				if (id2 < 0) id2 = nodes.size()-2;
+				if ((r.nextDouble() <= (nodes.get(id2).getGrau() / totalGrau))
+						&& !edgesLines.contains(id + ";" + id2 + ";Undirected")) {
+					c++;
+					edgesLines.add(id + ";" + id2 + ";Undirected");
 					nodes.get(id).incGrau();
+					nodes.get(id2).incGrau();
+					totalGrau += 2;
 				}
-			} else if (id > 1) {
-				n1 = r.nextInt(nodes.size()-1);
-				if (nodes.get(n1).getGrau() == 0) {
-					if (r.nextDouble() <= p) { 
-						edgesLines.add(id + ";" + n1 + ";Undirected");
-						nodes.get(n1).incGrau();
-						nodes.get(id).incGrau();
-					}
-				} else {
-					if (Math.pow(r.nextDouble(), (nodes.get(n1).getGrau())) <= p) {
-						edgesLines.add(id + ";" + n1 + ";Undirected");
-						nodes.get(n1).incGrau();
-						nodes.get(id).incGrau();
-					}
-				}
-				
-				n2 = n1;
-				while (n2 == n1) { n2 = r.nextInt(nodes.size()-1); }
-				
-				if (nodes.get(n2).getGrau() == 0) {
-					if (r.nextDouble() <= p) { 
-						edgesLines.add(id + ";" + n2 + ";Undirected");
-						nodes.get(n2).incGrau();
-						nodes.get(id).incGrau();
-					}
-				} else {
-					if (Math.pow(r.nextDouble(), (nodes.get(n2).getGrau())) <= p) {
-						edgesLines.add(id + ";" + n2 + ";Undirected");
-						nodes.get(n2).incGrau();
-						nodes.get(id).incGrau();
-					}
-				}
-				
+				id2--;
 			}
 		}
 		
