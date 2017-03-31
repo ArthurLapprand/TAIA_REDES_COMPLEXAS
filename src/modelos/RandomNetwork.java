@@ -1,3 +1,4 @@
+package modelos;
 import java.util.List;
 import java.util.Random;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Main {
+public class RandomNetwork {
 
 	public static void main(String[] args) throws IOException {
 		List<String> nodeLines = new ArrayList<String>();
@@ -19,7 +20,7 @@ public class Main {
 		
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		
-		double p = 0.04;
+		double p = 0.02;
 		
 		for (int id = 0; id < 200; id++) {
 			nodes.add(id);
