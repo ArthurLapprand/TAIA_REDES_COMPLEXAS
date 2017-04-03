@@ -24,9 +24,11 @@ public class RandomNetwork {
 		
 		for (int id = 0; id < 200; id++) {
 			nodes.add(id);
-			nodeLines.add("" + (id + 1));
+			// nós com id de 0 a 199
+			nodeLines.add("" + id);
 			if (id > 0) {
 				for (int i = 0; i < nodes.size() - 1; i++) {
+					// adicionando arestas
 					if (r.nextDouble() <= p) { edgesLines.add(id + ";" + i + ";Undirected"); }					
 				}
 			}
